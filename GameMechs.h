@@ -11,38 +11,40 @@ using namespace std;
 
 class GameMechs
 {
-    private:
-        char input;
-        bool exitFlag;
-        bool loseFlag;
-        int score;
+private:
+    char input;
+    bool exitFlag;
+    bool loseFlag;
+    int score;
 
-        int boardSizeX;
-        int boardSizeY;
+    int boardSizeX;
+    int boardSizeY;
 
-        objPos food;
+    objPos foodPos;
 
-    public:
-        GameMechs();
-        GameMechs(int boardX, int boardY);
-        ~GameMechs(); // is this one needed at all? Why or why not?
-        
-        bool getExitFlagStatus() const; 
-        void setExitTrue();
-        bool getLoseFlagStatus() const;
-        void setLoseFlag();
+public:
+    GameMechs();
+    GameMechs(int boardX, int boardY);
+    ~GameMechs(); // is this one needed at all? Why or why not?
 
-        char getInput() const;
-        void setInput(char this_input);
-        void clearInput();
+    bool getExitFlagStatus() const;
+    void setExitTrue();
+    bool getLoseFlagStatus() const;
+    void setLoseFlag();
 
-        int getBoardSizeX() const;
-        int getBoardSizeY() const;
-        
-        int getScore() const;
-        void incrementScore();
-        
-        // More methods should be added here
+    char getInput() const;
+    void setInput(char this_input);
+    void clearInput();
+
+    int getBoardSizeX() const;
+    int getBoardSizeY() const;
+
+    int getScore() const;
+    void incrementScore();
+
+    // More methods should be added here
+    void generateFood(objPosArrayList *blockOff);
+    objPos getFoodPos();
 };
 
 #endif
