@@ -1,9 +1,11 @@
 #include "Player.h"
+#include "Food.h"
 
-Player::Player(GameMechs *thisGMRef)
+Player::Player(GameMechs *thisGMRef, Food *foodBucketRef)
 {
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
+    mainFoodBucketRef = foodBucketRef;
 
     // more actions to be included
     // mainGameMechsRef->getBoardSizeX() / 2, mainGameMechsRef->getBoardSizeY() / 2, '*')
@@ -69,6 +71,7 @@ void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
     objPos newHead = (playerPosArrayList->getHeadElement());
+    // wraparound logic
     switch (myDir)
     {
     case UP:
@@ -98,25 +101,49 @@ void Player::movePlayer()
     default:
         break;
     }
+    bool foodEaten = false;
     if (myDir != STOP)
     {
-        playerPosArrayList->insertHead(newHead);
+        playerPosArrayList->insertHead(newHead); // insert at head at new position
         for (int i = 1; i < playerPosArrayList->getSize(); i++)
         {
-            if (newHead.pos->x == playerPosArrayList->getElement(i).pos->x && newHead.pos->y == playerPosArrayList->getElement(i).pos->y)
+            if (newHead.pos->x == playerPosArrayList->getElement(i).pos->x && newHead.pos->y == playerPosArrayList->getElement(i).pos->y) // if collision with self detected at any point, exit/lose
             {
                 mainGameMechsRef->setExitTrue();
                 mainGameMechsRef->setLoseFlag();
             }
         }
 
-        if (!(mainGameMechsRef->getFoodPos().pos->x == newHead.pos->x && mainGameMechsRef->getFoodPos().pos->y == newHead.pos->y))
-            playerPosArrayList->removeTail();
-        else
+        for (int i = 0; i < 5; i++)
         {
-            mainGameMechsRef->incrementScore();
-            mainGameMechsRef->generateFood(playerPosArrayList);
+            if (mainFoodBucketRef->getFoodPos()->getElement(i).pos->x == newHead.pos->x && mainFoodBucketRef->getFoodPos()->getElement(i).pos->y == newHead.pos->y) // if food eaten, check if special food
+            {
+                foodEaten = true;
+                mainGameMechsRef->incrementScore();
+                if (mainFoodBucketRef->getFoodPos()->getElement(i).getSymbol() == 'X')
+                {
+                    for (int j = 0; j < 20; j++)
+                        mainGameMechsRef->incrementScore();
+                }
+                else if (mainFoodBucketRef->getFoodPos()->getElement(i).getSymbol() == 'Y')
+                {
+                    if (playerPosArrayList->getSize() <= 5)
+                    {
+                        for (int j = 0; j < playerPosArrayList->getSize() - 1; j++)
+                            playerPosArrayList->removeTail();
+                    }
+                    else
+                    {
+                        for (int j = 0; j < 5; j++)
+                            playerPosArrayList->removeTail();
+                    }
+                }
+                mainFoodBucketRef->generateFood(mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+                break;
+            }
         }
+        if (!foodEaten)
+            playerPosArrayList->removeTail();
     }
 }
 

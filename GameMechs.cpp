@@ -86,31 +86,3 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
-
-void GameMechs::generateFood(objPosArrayList *playerPosArrayList)
-{
-    int xCheck[boardSizeX] = {0};
-    int yCheck[boardSizeY] = {0};
-    for (int i = 0; i < playerPosArrayList->getSize(); i++)
-    {
-        xCheck[playerPosArrayList->getElement(i).pos->x] = 0;
-        yCheck[playerPosArrayList->getElement(i).pos->y] = 0;
-    }
-    bool foodMade = false;
-    while (!foodMade)
-    {
-        int xPos = rand() % (boardSizeX - 2) + 1;
-        int yPos = rand() % (boardSizeY - 2) + 1;
-        if (xCheck[xPos] == 0 && yCheck[yPos] == 0)
-        {
-            foodPos.pos->x = xPos;
-            foodPos.pos->y = yPos;
-            foodMade = true;
-        }
-    }
-}
-
-objPos GameMechs::getFoodPos()
-{
-    return foodPos;
-}
