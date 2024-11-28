@@ -1,6 +1,4 @@
 #include "GameMechs.h"
-#include <stdlib.h>
-#include <time.h>
 
 GameMechs::GameMechs()
 {
@@ -22,7 +20,6 @@ GameMechs::GameMechs(int boardX, int boardY)
     loseFlag = false;
     score = 0;
     input = 0;
-    srand(time(NULL));
 }
 
 // do you need a destructor?

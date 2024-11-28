@@ -41,10 +41,6 @@ public:
 
     int getScore() const;
     void incrementScore();
-
-    // More methods should be added here
-    void generateFood(objPosArrayList *blockOff);
-    objPos getFoodPos();
 };
 
 #endif

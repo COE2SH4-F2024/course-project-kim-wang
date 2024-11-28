@@ -1,10 +1,13 @@
 #include "Food.h"
 #include "Player.h"
+#include <stdlib.h>
+#include <time.h>
 
 Food::Food(Player *thisPlayerRef)
 {
     playerRef = thisPlayerRef;
     foodBucket = new objPosArrayList();
+    srand(time(NULL));
 }
 
 Food::~Food()
