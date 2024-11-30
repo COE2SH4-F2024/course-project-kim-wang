@@ -129,12 +129,13 @@ void Player::movePlayer()
                 {
                     if (playerPosArrayList->getSize() <= 5)
                     {
-                        for (int j = 0; j < playerPosArrayList->getSize() - 1; j++)
+                        int currentSize = playerPosArrayList->getSize();
+                        for (int j = 0; j < currentSize - 1; j++)
                             playerPosArrayList->removeTail();
                     }
                     else
                     {
-                        for (int j = 0; j < 5; j++)
+                        for (int j = 0; j < 6; j++)
                             playerPosArrayList->removeTail();
                     }
                 }

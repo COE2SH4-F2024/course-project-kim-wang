@@ -45,6 +45,7 @@ void Initialize(void)
     mainGameMechs = new GameMechs();
     mainPlayer = new Player(mainGameMechs, mainFoodBucket);
     mainFoodBucket = new Food(mainPlayer);
+    delete mainPlayer; // did this to enable circular dependency, as mainPlayer and mainFoodBucket reference each other, and ensure no memory leak
     mainPlayer = new Player(mainGameMechs, mainFoodBucket);
     mainFoodBucket->generateFood(mainGameMechs->getBoardSizeX(), mainGameMechs->getBoardSizeY());
 }
@@ -115,6 +116,7 @@ void DrawScreen(void)
 
     // Display score and game over message if needed
     MacUILib_printf("Score: %d\n", mainGameMechs->getScore());
+    MacUILib_printf("Size: %d\n", mainPlayer->getPlayerPos()->getSize());
     if (mainGameMechs->getLoseFlagStatus())
         MacUILib_printf("You Lose");
 }
