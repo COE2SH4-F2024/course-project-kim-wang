@@ -45,7 +45,6 @@ void Initialize(void)
     mainGameMechs = new GameMechs();
     mainPlayer = new Player(mainGameMechs, mainFoodBucket);
     mainFoodBucket = new Food(mainPlayer);
-    delete mainPlayer; // did this to enable circular dependency, as mainPlayer and mainFoodBucket reference each other, and ensure no memory leak
     mainPlayer = new Player(mainGameMechs, mainFoodBucket);
     mainFoodBucket->generateFood(mainGameMechs->getBoardSizeX(), mainGameMechs->getBoardSizeY());
 }
